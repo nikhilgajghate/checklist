@@ -1,0 +1,17 @@
+numpy
+pandas
+pydantic
+black
+mypy
+ruff
+hatchling
+isort
+scikit-learn
+matplotlib
+seaborn
+plotly
+statsmodels
+scipy
+customtkinter
+pyinstaller
+
