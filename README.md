@@ -2,7 +2,7 @@
 
 A modern, user-friendly desktop application for tracking daily action items and tasks. Built with Python and CustomTkinter for a beautiful, modern UI.
 
-## Features
+## 🚀 Features
 
 - ✨ **Modern Dark UI** - Clean, professional interface with dark theme
 - 📝 **Add Tasks** - Easily add new action items with a simple input field
@@ -113,25 +113,6 @@ Modify the window size by changing these lines:
 self.root.geometry("800x600")  # Width x Height
 self.root.minsize(600, 400)    # Minimum window size
 ```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Module not found" errors**
-   - Make sure you've installed all dependencies: `pip install -r requirements.txt`
-
-2. **Application won't start**
-   - Check that Python 3.11 or a more recent version is installed
-   - Verify all dependencies are installed correctly
-
-3. **Executable build fails**
-   - Ensure PyInstaller is installed: `pip install pyinstaller`
-   - Try running the build script with administrator privileges
-
-4. **Data not saving**
-   - Check that the application has write permissions in the directory
-   - Look for `checklist_data.json` in the same folder as the executable
 
 ## Development
 
