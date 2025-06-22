@@ -6,6 +6,7 @@ A modern, user-friendly desktop application for tracking daily action items and 
 
 - ✨ **Modern Dark UI** - Clean, professional interface with dark theme
 - 📝 **Add Tasks** - Easily add new action items with a simple input field
+- ✏️ **Edit Tasks** - Double-click tasks or use edit button to modify task text
 - ☑️ **Checkbox Management** - Mark tasks as complete/incomplete with checkboxes
 - 🗑️ **Delete Tasks** - Remove individual tasks with delete buttons
 - 📊 **Progress Tracking** - See how many tasks you've completed
@@ -73,6 +74,7 @@ To create a standalone `.exe` file that can be run without Python installed:
 
 ### Managing Tasks
 - **Complete a task**: Click the checkbox next to the task
+- **Edit a task**: Double-click the task text or click the ✏️ button
 - **Delete a task**: Click the 🗑️ button next to the task
 - **Clear completed**: Click "Clear Completed" to remove all finished tasks
 - **Clear all**: Click "Clear All" to remove all tasks (with confirmation)
@@ -125,7 +127,7 @@ python checklist_app.py
 ### Code Structure
 - `ChecklistApp` class: Main application logic
 - `create_widgets()`: UI layout and widget creation
-- `add_task()`, `toggle_task()`, `delete_task()`: Task management functions
+- `add_task()`, `toggle_task()`, `delete_task()`, `edit_task()`: Task management functions
 - `save_data()`, `load_data()`: Data persistence functions
 
 ## License

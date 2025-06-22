@@ -156,6 +156,101 @@ class ChecklistApp:
         self.update_tasks_display()
         self.save_data()
 
+    def edit_task(self, task_id: int) -> None:
+        """Open edit dialog for a task"""
+        # Find the task
+        task = None
+        for t in self.tasks:
+            if t["id"] == task_id:
+                task = t
+                break
+        
+        if not task:
+            return
+        
+        # Create edit dialog
+        edit_window = ctk.CTkToplevel(self.root)
+        edit_window.title("Edit Task")
+        edit_window.geometry("500x150")
+        edit_window.resizable(False, False)
+        edit_window.transient(self.root)  # Make it modal
+        edit_window.grab_set()  # Make it modal
+        
+        # Center the dialog
+        edit_window.update_idletasks()
+        x = (edit_window.winfo_screenwidth() // 2) - (500 // 2)
+        y = (edit_window.winfo_screenheight() // 2) - (150 // 2)
+        edit_window.geometry(f"500x150+{x}+{y}")
+        
+        # Create dialog content
+        dialog_frame = ctk.CTkFrame(edit_window)
+        dialog_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        # Label
+        label = ctk.CTkLabel(
+            dialog_frame,
+            text="Edit task:",
+            font=ctk.CTkFont(size=14, weight="bold")
+        )
+        label.pack(anchor="w", padx=10, pady=(10, 5))
+        
+        # Entry field
+        entry = ctk.CTkEntry(
+            dialog_frame,
+            height=35,
+            font=ctk.CTkFont(size=14)
+        )
+        entry.pack(fill="x", padx=10, pady=(0, 15))
+        entry.insert(0, task["text"])
+        entry.select_range(0, tk.END)  # Select all text
+        entry.focus()
+        
+        # Buttons frame
+        buttons_frame = ctk.CTkFrame(dialog_frame)
+        buttons_frame.pack(fill="x", padx=10)
+        
+        # Save button
+        save_btn = ctk.CTkButton(
+            buttons_frame,
+            text="Save",
+            command=lambda: self.save_edit(task_id, entry.get().strip(), edit_window),
+            height=30,
+            font=ctk.CTkFont(size=12, weight="bold")
+        )
+        save_btn.pack(side="right", padx=(5, 0))
+        
+        # Cancel button
+        cancel_btn = ctk.CTkButton(
+            buttons_frame,
+            text="Cancel",
+            command=edit_window.destroy,
+            height=30,
+            font=ctk.CTkFont(size=12)
+        )
+        cancel_btn.pack(side="right")
+        
+        # Bind Enter key to save
+        entry.bind("<Return>", lambda event: self.save_edit(task_id, entry.get().strip(), edit_window))
+        # Bind Escape key to cancel
+        entry.bind("<Escape>", lambda event: edit_window.destroy())
+    
+    def save_edit(self, task_id: int, new_text: str, window) -> None:
+        """Save the edited task text"""
+        if not new_text.strip():
+            messagebox.showwarning("Warning", "Task text cannot be empty!")
+            return
+        
+        # Update the task
+        for task in self.tasks:
+            if task["id"] == task_id:
+                task["text"] = new_text.strip()
+                break
+        
+        # Close the dialog and update display
+        window.destroy()
+        self.update_tasks_display()
+        self.save_data()
+
     def clear_completed(self) -> None:
         self.tasks = [task for task in self.tasks if not task["completed"]]
         self.update_tasks_display()
@@ -196,9 +291,23 @@ class ChecklistApp:
                 task_frame, text=task_text, font=ctk.CTkFont(size=14), wraplength=500
             )
             task_label.pack(side="left", fill="x", expand=True, padx=5)
+            
+            # Bind double-click to edit task
+            task_label.bind("<Double-Button-1>", lambda event, t=task["id"]: self.edit_task(t))
 
             if task["completed"]:
                 task_label.configure(text_color="gray")
+
+            # Edit button
+            edit_btn = ctk.CTkButton(
+                task_frame,
+                text="✏️",
+                width=30,
+                height=25,
+                command=lambda t=task["id"]: self.edit_task(t),
+                font=ctk.CTkFont(size=12),
+            )
+            edit_btn.pack(side="right", padx=2)
 
             # Delete button
             delete_btn = ctk.CTkButton(
