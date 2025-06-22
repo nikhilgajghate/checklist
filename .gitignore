@@ -3,9 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Icon files
-icon/
-
 # C extensions
 *.so
 
